@@ -4,17 +4,25 @@
     <el-input v-model="questionsForm.questionId"></el-input>
   </el-form-item>
   <el-form-item label="题目等级" prop="questionLevel">
-    <el-input v-model="questionsForm.questionLevel.level" placeholder="等级"></el-input>
-    <el-input v-model="questionsForm.questionLevel.unit" placeholder="单元"></el-input>
+    <el-input v-model="questionsForm.questionLevel" placeholder="等级"></el-input>
+  </el-form-item>
+  <el-form-item label="题目单元" prop="questionUnit">
+    <el-input v-model="questionsForm.questionUnit" placeholder="单元"></el-input>
   </el-form-item>
   <el-form-item label="题目标题" prop="questionTitle">
     <el-input v-model="questionsForm.questionTitle"></el-input>
   </el-form-item>
-  <el-form-item label="选项" prop="questionOptions">
-    <el-input v-model="questionsForm.questionOptions.one" placeholder="选项1"></el-input>
-    <el-input v-model="questionsForm.questionOptions.two" placeholder="选项2"></el-input>
-    <el-input v-model="questionsForm.questionOptions.three" placeholder="选项3"></el-input>
-    <el-input v-model="questionsForm.questionOptions.four" placeholder="选项4"></el-input>
+  <el-form-item label="选项" prop="option_1">
+    <el-input v-model="questionsForm.option_1" placeholder="选项1"></el-input>
+  </el-form-item>
+  <el-form-item label="选项" prop="option_2">
+    <el-input v-model="questionsForm.option_2" placeholder="选项2"></el-input>
+  </el-form-item>
+  <el-form-item label="选项" prop="option_3">
+    <el-input v-model="questionsForm.option_3" placeholder="选项3"></el-input>
+  </el-form-item>
+  <el-form-item label="选项" prop="option_4">
+    <el-input v-model="questionsForm.option_4" placeholder="选项4"></el-input>
   </el-form-item>
   <el-form-item label="答案" prop="correctAnswer">
     <el-radio v-model="questionsForm.correctAnswer" label="1">答案1</el-radio>
@@ -40,17 +48,13 @@
       return {
         questionsForm: {
           questionId: '',
-          questionLevel: {
-            level: '',
-            unit: ''
-          },
+          questionLevel: '',
+          questionUnit: '',
           questionTitle: '',
-          questionOptions: {
-            one: '',
-            two: '',
-            three: '',
-            four: ''
-          },
+          option_1: '',
+          option_2: '',
+          option_3: '',
+          option_4: '',
           correctAnswer: '',
           answerAnalysis: ''
         },
@@ -58,18 +62,27 @@
           questionId: [
             { required: true, message: '请输入题目id', trigger: 'blur' }
           ],
-          questionLevel: {
-            type: 'object', required: true, message: '请输入等级', trigger: 'blur',
-            level: { type: 'string', required: true, message: '长度在 1 到 5 个字符', trigger: 'blur' },
-            unit: { type: 'string', required: true, message: '长度在 1 到 5 个字符', trigger: 'blur' }
-          },
+          questionLevel: [
+            { type: 'string', required: true, message: '请输入等级', trigger: 'blur'}
+          ],
+          questionUnit: [
+            { type: 'string', required: true, message: '请输入单元', trigger: 'blur'}
+          ],
           questionTitle: [
             { required: true, message: '请输入题目', trigger: 'blur' }
           ],
-          questionOptions: {
-            type: 'object', required: true, message: '请输入选项', trigger: 'blur',
-            
-          },
+          option_1: [
+            { type: 'string', required: true, message: '请输入选项', trigger: 'blur' }
+          ],
+          option_2: [
+            { type: 'string', required: true, message: '请输入选项', trigger: 'blur' }
+          ],
+          option_3: [
+            { type: 'string', required: true, message: '请输入选项', trigger: 'blur' }
+          ],
+          option_4: [
+            { type: 'string', required: true, message: '请输入选项', trigger: 'blur' }
+          ],
           correctAnswer: [
             { required: true, message: '请选择正确答案', trigger: 'change' }
           ],
@@ -86,8 +99,12 @@
             const params = {
               questionId: this.questionsForm.questionId,
               questionLevel: this.questionsForm.questionLevel,
+              questionUnit: this.questionsForm.questionUnit,
               questionTitle: this.questionsForm.questionTitle,
-              questionOptions: this.questionsForm.questionOptions,
+              option_1: this.questionsForm.option_1,
+              option_2: this.questionsForm.option_2,
+              option_3: this.questionsForm.option_3,
+              option_4: this.questionsForm.option_4,
               correctAnswer: this.questionsForm.correctAnswer,
               answerAnalysis: this.questionsForm.answerAnalysis
             }
