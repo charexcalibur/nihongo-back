@@ -1,7 +1,7 @@
 <template>
   <el-form :model="questionsForm" :rules="rules" ref="questionsForm" label-width="100px" class="demo-questionsForm">
   <el-form-item label="题目编号" prop="questionId">
-    <el-input v-model="questionsForm.questionId"></el-input>
+    <el-input v-model.number="questionsForm.questionId"></el-input>
   </el-form-item>
   <el-form-item label="题目等级" prop="questionLevel">
     <el-input v-model="questionsForm.questionLevel" placeholder="等级"></el-input>
@@ -60,13 +60,13 @@
         },
         rules: {
           questionId: [
-            { required: true, message: '请输入题目id', trigger: 'blur' }
+            { type: 'number', required: true, message: '请输入活动名称', trigger: 'blur' }
           ],
           questionLevel: [
-            { type: 'string', required: true, message: '请输入等级', trigger: 'blur'}
+            { type: 'string', required: true, message: '请输入等级', trigger: 'blur' }
           ],
           questionUnit: [
-            { type: 'string', required: true, message: '请输入单元', trigger: 'blur'}
+            { type: 'string', required: true, message: '请输入单元', trigger: 'blur' }
           ],
           questionTitle: [
             { required: true, message: '请输入题目', trigger: 'blur' }
@@ -115,6 +115,8 @@
             .catch((error) => {
               console.log(error)
             })
+
+            this.resetForm(formName)
           } else {
             console.log('error submit!!')
             return false
