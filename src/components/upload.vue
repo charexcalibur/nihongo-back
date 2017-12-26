@@ -3,34 +3,24 @@
   <el-form-item label="题目编号" prop="questionId">
     <el-input v-model="questionsForm.questionId"></el-input>
   </el-form-item>
-  <el-form-item label="题目等级" prop="level">
+  <el-form-item label="题目等级" prop="questionLevel">
     <el-input v-model="questionsForm.questionLevel.level" placeholder="等级"></el-input>
-  </el-form-item>
-  <el-form-item label="题目单元" prop="unit">
     <el-input v-model="questionsForm.questionLevel.unit" placeholder="单元"></el-input>
   </el-form-item>
   <el-form-item label="题目标题" prop="questionTitle">
     <el-input v-model="questionsForm.questionTitle"></el-input>
   </el-form-item>
-  <el-form-item label="选项1" prop="one">
+  <el-form-item label="选项" prop="questionOptions">
     <el-input v-model="questionsForm.questionOptions.one" placeholder="选项1"></el-input>
-  </el-form-item>
-  <el-form-item label="选项2" prop="two">
     <el-input v-model="questionsForm.questionOptions.two" placeholder="选项2"></el-input>
-  </el-form-item>
-  <el-form-item label="选项3" prop="three">
     <el-input v-model="questionsForm.questionOptions.three" placeholder="选项3"></el-input>
-  </el-form-item>
-  <el-form-item label="选项4" prop="four">
     <el-input v-model="questionsForm.questionOptions.four" placeholder="选项4"></el-input>
   </el-form-item>
   <el-form-item label="答案" prop="correctAnswer">
-    <el-radio-group v-model="questionsForm.correctAnswer">
-      <el-radio label="1">答案1</el-radio>
-      <el-radio label="2">答案2</el-radio>
-      <el-radio label="3">答案3</el-radio>
-      <el-radio label="4">答案4</el-radio>
-    </el-radio-group>
+    <el-radio v-model="questionsForm.correctAnswer" label="1">答案1</el-radio>
+    <el-radio v-model="questionsForm.correctAnswer" label="2">答案2</el-radio>
+    <el-radio v-model="questionsForm.correctAnswer" label="3">答案3</el-radio>
+    <el-radio v-model="questionsForm.correctAnswer" label="4">答案4</el-radio>
   </el-form-item>
   <el-form-item label="答案解析" prop="answerAnalysis">
     <el-input type="textarea" v-model="questionsForm.answerAnalysis"></el-input>
@@ -68,15 +58,18 @@
           questionId: [
             { required: true, message: '请输入题目id', trigger: 'blur' }
           ],
-          level: { required: true, message: '请输入题目等级', trigger: 'blur' },
-          unit: { required: true, message: '请输入题目单元', trigger: 'blur' },
+          questionLevel: {
+            type: 'object', required: true, message: '请输入等级', trigger: 'blur',
+            level: { type: 'string', required: true, message: '长度在 1 到 5 个字符', trigger: 'blur' },
+            unit: { type: 'string', required: true, message: '长度在 1 到 5 个字符', trigger: 'blur' }
+          },
           questionTitle: [
             { required: true, message: '请输入题目', trigger: 'blur' }
           ],
-          one: { required: true, message: '请输入选项', trigger: 'blur' },
-          two: { required: true, message: '请输入选项', trigger: 'blur' },
-          three: { required: true, message: '请输入选项', trigger: 'blur' },
-          four: { required: true, message: '请输入选项', trigger: 'blur' },
+          questionOptions: {
+            type: 'object', required: true, message: '请输入选项', trigger: 'blur',
+            
+          },
           correctAnswer: [
             { required: true, message: '请选择正确答案', trigger: 'change' }
           ],
@@ -95,7 +88,7 @@
               questionLevel: this.questionsForm.questionLevel,
               questionTitle: this.questionsForm.questionTitle,
               questionOptions: this.questionsForm.questionOptions,
-              currentAnswer: this.questionsForm.currentAnswer,
+              correctAnswer: this.questionsForm.correctAnswer,
               answerAnalysis: this.questionsForm.answerAnalysis
             }
             axios.post('http://localhost:3000/questions/add', params)
