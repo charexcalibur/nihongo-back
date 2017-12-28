@@ -19,7 +19,7 @@ export default new Router({
         path: '/showquestions',
         component: ShowQuestions
       }, {
-        path: 'upload',
+        path: '/upload',
         component: Upload
       }]
     }
