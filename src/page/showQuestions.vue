@@ -31,13 +31,24 @@
       </el-table-column>
       <el-table-column
         label="操作"
-        width="100">
+        width="200">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
+          <el-button type="danger" @click="centerDialogVisible = true" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog
+      title="提示"
+      :visible.sync="centerDialogVisible"
+      width="30%"
+      center>
+      <span>删除提示</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
     <div class="Pagination" style="text-align: left;margin-top: 10px;">
       <el-pagination
         @current-change="handleCurrentChange"
@@ -59,7 +70,8 @@
         questionsList: [],
         count: 0,
         currentPage: 1,
-        pageSize: 10
+        pageSize: 10,
+        centerDialogVisible: false
       }
     },
     mounted () {
