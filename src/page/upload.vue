@@ -47,6 +47,11 @@
       <el-button type="primary" @click="dialogVisible = true">确定</el-button>
       <el-button @click="resetForm('questionsForm')">重置</el-button>
     </el-form-item>
+    <el-alert
+      title="重复id"
+      type="error"
+      v-show="showAlert">
+    </el-alert>
   </el-form>
 </template>
 
@@ -57,7 +62,8 @@
     data () {
       return {
         dialogVisible: false,
-
+        idRepeated: true,
+        showAlert: false,
         questionsForm: {
           questionId: '',
           questionLevel: '',
@@ -108,8 +114,13 @@
       submitForm (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+
+            // number转换
+            let intQuestionId = parseInt(this.questionsForm.questionId),
+                intCorrentAnswer = parseInt(this.questionsForm.correctAnswer)
+
             const params = {
-              questionId: this.questionsForm.questionId,
+              questionId: intQuestionId,
               questionLevel: this.questionsForm.questionLevel,
               questionUnit: this.questionsForm.questionUnit,
               questionTitle: this.questionsForm.questionTitle,
@@ -117,19 +128,47 @@
               option_2: this.questionsForm.option_2,
               option_3: this.questionsForm.option_3,
               option_4: this.questionsForm.option_4,
-              correctAnswer: this.questionsForm.correctAnswer,
+              correctAnswer: intCorrentAnswer,
               answerAnalysis: this.questionsForm.answerAnalysis
             }
-            axios.post('http://localhost:3000/questions/add', params)
-            .then((response) => {
-              console.log(response)
-            })
-            .catch((error) => {
-              console.log(error)
+
+            // 判断是否是重复id
+            axios.get('http://localhost:3000/questions/check', {
+              params: {
+                questionId: this.questionsForm.questionId
+              }
+            }).then((response) => {
+              let res = response.data
+              if (res.status === '1') {
+                console.log('checkerr:' + res.msg)
+                this.idRepeated = false
+              } else {
+                // console.log('重复id：' + res.result)
+                let num = parseInt(res.result.idNum)
+                if (num > 0) {
+                  console.log('存在相同id')
+                  this.resetForm(formName)
+                  this.dialogVisible = false
+                  // this.idRepeated = true
+                  this.showAlert = true                  
+                } else {
+                  axios.post('http://localhost:3000/questions/add', params)
+                  .then((response) => {
+                    console.log(response)
+                  })
+                  .catch((error) => {
+                    console.log(error)
+                  })
+                  this.resetForm(formName)
+                  this.dialogVisible = false 
+                }
+              }
             })
 
-            this.resetForm(formName)
-            this.dialogVisible = false
+            
+           
+          
+
           } else {
             console.log('error submit!!')
             return false

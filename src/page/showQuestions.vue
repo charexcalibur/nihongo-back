@@ -33,8 +33,8 @@
         label="操作"
         width="200">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
-          <el-button type="danger" @click="centerDialogVisible = true" size="small">删除</el-button>
+          <el-button @click="_deleteList(scope.row)" type="primary" size="small">编辑</el-button>
+          <el-button type="danger" @click="_getid(scope.row)" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -46,7 +46,7 @@
       <span>删除提示</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="_deleteList()">确 定</el-button>
       </span>
     </el-dialog>
     <div class="Pagination" style="text-align: left;margin-top: 10px;">
@@ -68,6 +68,7 @@
     data () {
       return {
         questionsList: [],
+        questionId: 0,
         count: 0,
         currentPage: 1,
         pageSize: 10,
@@ -79,11 +80,10 @@
     },
     methods: {
       handleClick (row) {
-        console.log(row)
+        console.log(row.questionId)
       },
       handleCurrentChange (val) {
         this.currentPage = val
-        // this.offset = (val - 1)*this.limit;
         this._initData()
       },
       _initData () {
@@ -108,6 +108,25 @@
             this.questionsList = res.result.list
           } else {
             this.questionsList = []
+          }
+        })
+      },
+      _getid (row) {
+        this.questionId = row.questionId
+        this.centerDialogVisible = true
+      },
+      _deleteList () {
+        const params = {
+          questionId: this.questionId
+        }
+
+        axios.post('http://localhost:3000/questions/del', params)
+        .then((response) => {
+          let res = response.data
+          if (res.status === '0') {
+            console.log('del suc')
+            this.centerDialogVisible = false
+            this._initData()
           }
         })
       }
