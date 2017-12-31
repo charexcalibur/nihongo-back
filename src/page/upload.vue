@@ -147,14 +147,14 @@
                 let num = parseInt(res.result.idNum)
                 if (num > 0) {
                   console.log('存在相同id')
-                  this.resetForm(formName)
-                  this.dialogVisible = false
-                  // this.idRepeated = true
-                  this.showAlert = true                  
+                  this.idAlert()
+                  //this.resetForm(formName)
+                  this.dialogVisible = false                 
                 } else {
                   axios.post('http://localhost:3000/questions/add', params)
                   .then((response) => {
                     console.log(response)
+                    this.idPass()
                   })
                   .catch((error) => {
                     console.log(error)
@@ -172,6 +172,12 @@
       },
       resetForm (formName) {
         this.$refs[formName].resetFields()
+      },
+      idAlert() {
+        this.$message.error('已存在相同id!')
+      },
+      idPass() {
+        this.$message.success('添加成功!')
       }
     }
   }
