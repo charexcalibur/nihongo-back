@@ -2,6 +2,8 @@
 
 > 一个题库后台管理系统
 
+目前是这样的。
+
 ![](http://owto68d41.bkt.clouddn.com/%E5%90%8E%E5%8F%B0%E7%B3%BB%E7%BB%9F.png)
 
 ## Build Setup
