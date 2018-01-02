@@ -114,10 +114,9 @@
       submitForm (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-
             // number转换
-            let intQuestionId = parseInt(this.questionsForm.questionId),
-                intCorrentAnswer = parseInt(this.questionsForm.correctAnswer)
+            let intQuestionId = parseInt(this.questionsForm.questionId)
+            let intCorrentAnswer = parseInt(this.questionsForm.correctAnswer)
 
             const params = {
               questionId: intQuestionId,
@@ -148,8 +147,8 @@
                 if (num > 0) {
                   console.log('存在相同id')
                   this.idAlert()
-                  //this.resetForm(formName)
-                  this.dialogVisible = false                 
+                  // this.resetForm(formName)
+                  this.dialogVisible = false
                 } else {
                   axios.post('http://localhost:3000/questions/add', params)
                   .then((response) => {
@@ -160,7 +159,7 @@
                     console.log(error)
                   })
                   this.resetForm(formName)
-                  this.dialogVisible = false 
+                  this.dialogVisible = false
                 }
               }
             })
@@ -173,10 +172,10 @@
       resetForm (formName) {
         this.$refs[formName].resetFields()
       },
-      idAlert() {
+      idAlert () {
         this.$message.error('已存在相同id!')
       },
-      idPass() {
+      idPass () {
         this.$message.success('添加成功!')
       }
     }

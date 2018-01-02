@@ -170,7 +170,7 @@
           ]
         }
       }
-    },    
+    },
     mounted () {
       this._initData()
     },
@@ -193,8 +193,8 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // number转换
-            let intQuestionId = parseInt(this.selectedId),
-                intCorrentAnswer = parseInt(this.questionsForm.correctAnswer)
+            let intQuestionId = parseInt(this.selectedId)
+            let intCorrentAnswer = parseInt(this.questionsForm.correctAnswer)
 
             const params = {
               questionId: intQuestionId,
@@ -208,7 +208,6 @@
               correctAnswer: intCorrentAnswer,
               answerAnalysis: this.questionsForm.answerAnalysis
             }
-            
             axios.post('http://localhost:3000/questions/update', params)
             .then((response) => {
               console.log(response)
@@ -281,7 +280,7 @@
         console.log('重置表单')
         this.$refs[formName].resetFields()
       },
-      idPass() {
+      idPass () {
         this.$message.success('修改成功!')
       }
     }
