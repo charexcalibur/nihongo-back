@@ -1,17 +1,17 @@
 <template>
   <div class="loginPage">
     <div class="loginBox">
-      <el-form label-position="left" label-width="80px" :model="formLabelAlign">
-        <el-form-item label="用户名">
+      <el-form ref="loginForm" label-position="left" label-width="80px" :model="formData" :rules="rules">
+        <el-form-item label="用户名" prop="user_name">
           <el-input v-model="formData.use_name"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
-          <el-input v-model="formData.password"></el-input>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="formData.password" type="password"></el-input>
         </el-form-item>
       </el-form>
       <div class="btn">
         <el-button>注 册</el-button>
-        <el-button>登 录</el-button>
+        <el-button @click="submitForm('loginForm')">登 录</el-button>
       </div>
     </div>
   </div>
@@ -24,7 +24,28 @@ export default {
       formData: {
         user_name: '',
         password: ''
+      },
+      rules: {
+        user_name: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 2, max: 6, message: '长度在2到6个字符', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' }
+        ]
       }
+    }
+  },
+  methods: {
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          alert('submit err')
+          return false
+        }
+      })
     }
   }
 }
