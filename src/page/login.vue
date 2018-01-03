@@ -3,7 +3,7 @@
     <div class="loginBox">
       <el-form ref="loginForm" label-position="left" label-width="80px" :model="formData" :rules="rules">
         <el-form-item label="用户名" prop="user_name">
-          <el-input v-model="formData.use_name"></el-input>
+          <el-input v-model="formData.user_name"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="formData.password" type="password"></el-input>
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import {login} from '../api/login'
+
 export default {
   data () {
     return {
@@ -40,7 +42,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          login(this.formData)
         } else {
           alert('submit err')
           return false
