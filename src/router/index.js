@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Upload from '@/page/upload'
 import ShowQuestions from '@/page/showquestions'
 import Manage from '@/page/manage'
+import Login from '@/page/login'
 
 Vue.use(Router)
 
@@ -10,7 +11,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/manage'
+      component: Login
     },
     {
       path: '/manage',
