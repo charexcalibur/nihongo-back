@@ -10,15 +10,16 @@
         </el-form-item>
       </el-form>
       <div class="btn">
-        <el-button>注 册</el-button>
-        <el-button @click="submitForm('loginForm')">登 录</el-button>
+        <el-button @click="submitForm('loginForm')">注 册</el-button>
+        <el-button @click="login()">登 录</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {login} from '../api/login'
+// import {login, checkuser} from '../api/login'
+import axios from 'axios'
 
 export default {
   data () {
@@ -42,10 +43,48 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          login(this.formData)
+         // 检测相同id
+          axios.get('http://localhost:3000/admins/checkuser', {
+            params: {
+              user_name: this.formData.user_name
+            }
+          }).then((response) => {
+           let res = response.data
+           if (res.status === '0') {
+             if (res.result.user_code > 0) {
+               console.log('find same id')
+             } else {
+               console.log('no same id')
+               axios.post('http://localhost:3000/admins/create', {
+                 user_name: this.formData.user_name,
+                 password: this.formData.password
+               })
+             }
+           }
+          })
+         
+         } else {
+           alert('submit err')
+           return false
+         }
+      })
+    },
+    login () {
+      axios.get('http://localhost:3000/admins/login', {
+        params: {
+          user_name: this.formData.user_name,
+          password: this.formData.password
+        }
+      })
+      .then((response) => {
+        let res = response.data
+
+        if (res.status === '1') {
+          console.log(res.msg)
+        } else if (res.status === '0') {
+          console.log(res.msg)
         } else {
-          alert('submit err')
-          return false
+          console.log(res.msg)
         }
       })
     }

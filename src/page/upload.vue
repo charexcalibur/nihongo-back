@@ -142,10 +142,10 @@
                 console.log('checkerr:' + res.msg)
                 this.idRepeated = false
               } else {
-                // console.log('重复id：' + res.result)
+                // console.log('existed id：' + res.result)
                 let num = parseInt(res.result.idNum)
                 if (num > 0) {
-                  console.log('存在相同id')
+                  console.log('existed id')
                   this.idAlert()
                   // this.resetForm(formName)
                   this.dialogVisible = false
