@@ -20,6 +20,7 @@
 <script>
 // import {login, checkuser} from '../api/login'
 import axios from 'axios'
+import router from '../router/index'
 
 export default {
   data () {
@@ -53,11 +54,27 @@ export default {
            if (res.status === '0') {
              if (res.result.user_code > 0) {
                console.log('find same id')
+               this.$message({
+                 message: '已存在相同id',
+                 type: 'warning'
+               })
              } else {
                console.log('no same id')
                axios.post('http://localhost:3000/admins/create', {
                  user_name: this.formData.user_name,
                  password: this.formData.password
+               }).then((response) => {
+                 let res = response.data
+
+                 if (res.status === '1') {
+                   console.log('出现错误: ' + res.msg)
+                 } else {
+                   console.log(res.msg)
+                   this.$message({
+                     message: '注册成功',
+                     type: 'success'
+                   })
+                 }
                })
              }
            }
@@ -83,8 +100,17 @@ export default {
           console.log(res.msg)
         } else if (res.status === '0') {
           console.log(res.msg)
+          this.$message({
+            message: '密码错误',
+            type: 'warning'
+          })
         } else {
           console.log(res.msg)
+          this.$message({
+            message: '登录成功',
+            type: 'success'
+          })
+          router.push('/manage')
         }
       })
     }
