@@ -104,6 +104,11 @@ export default {
             message: '密码错误',
             type: 'warning'
           })
+        } else if (res.status === '3') {
+          this.$message({
+            message: '未注册用户',
+            type: 'warning'
+          })         
         } else {
           console.log(res.msg)
           this.$message({
