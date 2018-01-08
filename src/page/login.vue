@@ -111,6 +111,7 @@ export default {
           })         
         } else {
           console.log(res.msg)
+          this.$store.commit('updateUserInfo', this.formData.user_name)
           this.$message({
             message: '登录成功',
             type: 'success'

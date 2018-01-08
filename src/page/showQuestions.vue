@@ -112,7 +112,7 @@
 
 <script>
   import axios from 'axios'
-
+  import headTop from './../components/header'
   export default {
     data () {
       return {
@@ -173,6 +173,9 @@
     },
     mounted () {
       this._initData()
+    },
+    components: {
+      // headTop
     },
     methods: {
       editForm (row) {

@@ -5,8 +5,27 @@
 </template>
 
 <script>
+// import axios from 'axios'
 export default {
-  name: 'app'
+  name: 'app',
+  // data () {
+  //   return {
+  //     userInfo: {}
+  //   }
+  // },
+  // mounted () {
+  //   // 组件开始挂载时获取用户信息
+  //   this.getUserInfo()
+  // },
+  // methods: {
+  //   getUserInfo () {
+  //     this.userInfo = {
+  //       userName: ''
+  //     }
+ 
+  //     axios.get('')
+  //   }
+  // }
 }
 </script>
 
