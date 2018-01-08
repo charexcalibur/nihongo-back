@@ -28,12 +28,13 @@ export default {
       axios.get('http://localhost:3000/admins/checkLogin')
       .then((response) => {
         let res = response.data
+        console.log('res.result: ' + res.result)
         if (res.status === '0') {
           // todo
           this.$store.commit('updateUserInfo', res.result)
         } else {
           console.log(res.msg)
-          this.$router.push('/')
+          // this.$router.push('/')
         }
       })
     }
