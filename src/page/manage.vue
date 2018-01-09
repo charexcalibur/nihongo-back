@@ -50,6 +50,18 @@
       </el-main>
     </el-container>
   </el-container>
+
+  <el-dialog
+  title="提示"
+  :visible.sync="dialogVisible"
+  width="30%"
+  :before-close="handleClose">
+  <span>确认退出？</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="logout">确 定</el-button>
+  </span>
+</el-dialog>
 </div>
 </template>
 
@@ -58,7 +70,8 @@ import axios from 'axios'
 export default {
   data () {
     return {
-       userName: ''
+      userName: '',
+      dialogVisible: false
     }
   },
   created () {
@@ -91,6 +104,7 @@ export default {
         let res = response.data
 
         if (res.status === '0') {
+          this.dialogVisible = false
           this.$router.push('/')
         } else {
           console.log(res.msg)
@@ -99,7 +113,8 @@ export default {
     },
     handleCommand (command) {
       if (command === 'a') {
-        this.logout()
+        // this.logout()
+        this.dialogVisible = true
       }
     }    
   }
