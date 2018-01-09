@@ -34,7 +34,7 @@ export default {
           this.$store.commit('updateUserInfo', res.result)
         } else {
           console.log(res.msg)
-          // this.$router.push('/')
+          this.$router.push('/')
         }
       })
     }

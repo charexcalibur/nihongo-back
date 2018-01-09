@@ -22,6 +22,8 @@
 import axios from 'axios'
 import router from '../router/index'
 
+axios.defaults.withCredentials = true
+
 export default {
   data () {
     return {
