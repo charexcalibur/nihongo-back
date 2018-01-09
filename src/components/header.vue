@@ -1,10 +1,9 @@
 <template>
-  <div>
     <el-header style="text-align: right; font-size: 12px">
       <span>头部</span>
-      <span v-text="userName"></span>
+      <span>{{ userName }}</span>
+      <el-button type="text">文字按钮</el-button>
     </el-header>
-  </div>
 </template>
 
 <script>
@@ -12,7 +11,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      // userName: ''
+      userName: ''
     }
   },
   created () {
@@ -32,6 +31,7 @@ export default {
         if (res.status === '0') {
           // todo
           this.$store.commit('updateUserInfo', res.result)
+          this.userName = res.result
         } else {
           console.log(res.msg)
           this.$router.push('/')
@@ -41,4 +41,9 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+
+</style>
+
 

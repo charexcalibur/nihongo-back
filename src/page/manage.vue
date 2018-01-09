@@ -30,10 +30,19 @@
         </el-submenu>
       </el-menu>
     </el-aside>
-    
-    <head-top></head-top>
 
     <el-container>
+      <el-header class="el-header" style="text-align: right; font-size: 12px">
+        <el-dropdown @command="handleCommand">
+          <i class="el-icon-setting" style="margin-right: 15px"></i>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="a">登出</el-dropdown-item>
+            <el-dropdown-item>新增</el-dropdown-item>
+            <el-dropdown-item>删除</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <span>{{userName}}</span>
+      </el-header>
       <el-main style="height: 100%">
         <keep-alive>
           <router-view></router-view>
@@ -45,10 +54,54 @@
 </template>
 
 <script>
-import headTop from './../components/header'
+import axios from 'axios'
 export default {
-  components: {
-    headTop
+  data () {
+    return {
+       userName: ''
+    }
+  },
+  created () {
+    this.checkLogin()
+  },
+  computed: {
+    // userName () {
+    //   return this.$store.state.userName
+    // }
+  },
+  methods: {
+    checkLogin () {
+      axios.get('http://localhost:3000/admins/checkLogin')
+      .then((response) => {
+        let res = response.data
+        console.log('res.result: ' + res.result)
+        if (res.status === '0') {
+          // todo
+          this.$store.commit('updateUserInfo', res.result)
+          this.userName = res.result
+        } else {
+          console.log(res.msg)
+          this.$router.push('/')
+        }
+      })
+    },
+    logout () {
+      axios.get('http://localhost:3000/admins/logout')
+      .then((response) => {
+        let res = response.data
+
+        if (res.status === '0') {
+          this.$router.push('/')
+        } else {
+          console.log(res.msg)
+        }
+      })
+    },
+    handleCommand (command) {
+      if (command === 'a') {
+        this.logout()
+      }
+    }    
   }
 }
 </script>
@@ -63,6 +116,9 @@ export default {
     color: white !important
   .el-icon-setting
     color: white !important
+  .el-header
+    background-color #5DAC81
+    line-height 60px 
 </style>
 
 
