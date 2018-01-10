@@ -6,6 +6,12 @@
     <el-form-item label="题目等级" prop="questionLevel">
       <el-input v-model="questionsForm.questionLevel" placeholder="等级"></el-input>
     </el-form-item>
+    <el-form-item label="题目类型" prop="questionType">
+      <el-select v-model="questionsForm.questionType" placeholder="请选题目类型">
+        <el-option label="文法" value="文法"></el-option>
+        <el-option label="文字词汇" value="文字词汇"></el-option>
+      </el-select>
+    </el-form-item>
     <el-form-item label="题目单元" prop="questionUnit">
       <el-input v-model="questionsForm.questionUnit" placeholder="单元"></el-input>
     </el-form-item>
@@ -67,6 +73,7 @@
         questionsForm: {
           questionId: '',
           questionLevel: '',
+          questionType: '',
           questionUnit: '',
           questionTitle: '',
           option_1: '',
@@ -82,6 +89,9 @@
           ],
           questionLevel: [
             { type: 'string', required: true, message: '请输入等级', trigger: 'blur' }
+          ],
+          questionType: [
+            { required: true, message: '请选择题目类型', trigger: 'change'}
           ],
           questionUnit: [
             { type: 'string', required: true, message: '请输入单元', trigger: 'blur' }
@@ -121,6 +131,7 @@
             const params = {
               questionId: intQuestionId,
               questionLevel: this.questionsForm.questionLevel,
+              questionType: this.questionsForm.questionType,
               questionUnit: this.questionsForm.questionUnit,
               questionTitle: this.questionsForm.questionTitle,
               option_1: this.questionsForm.option_1,
