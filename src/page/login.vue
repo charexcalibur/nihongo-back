@@ -11,7 +11,7 @@
       </el-form>
       <div class="btn">
         <el-button @click="submitForm('loginForm')">注 册</el-button>
-        <el-button @click="login()">登 录</el-button>
+        <el-button @click="login">登 录</el-button>
       </div>
     </div>
   </div>
@@ -21,6 +21,7 @@
 // import {login, checkuser} from '../api/login'
 import axios from 'axios'
 import router from '../router/index'
+import {debounce} from './../common/util'
 
 axios.defaults.withCredentials = true
 
@@ -43,6 +44,13 @@ export default {
     }
   },
   methods: {
+    // 限流函数
+    throttle (func, context) {
+      clearTimeout(func.tId)
+      func.tId = setTimeout(() => {
+        func.call(context)
+      }, 1000)
+    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -53,14 +61,14 @@ export default {
             }
           }).then((response) => {
            let res = response.data
-           if (res.status === '0') {
-             if (res.result.user_code > 0) {
+            if (res.status === '0') {
+              if (res.result.user_code > 0) {
                console.log('find same id')
                this.$message({
                  message: '已存在相同id',
                  type: 'warning'
                })
-             } else {
+              } else {
                console.log('no same id')
                axios.post('http://localhost:3000/admins/create', {
                  user_name: this.formData.user_name,
@@ -78,49 +86,59 @@ export default {
                    })
                  }
                })
-             }
-           }
+              }
+            }
           })
-         
-         } else {
-           alert('submit err')
-           return false
-         }
+        } else {
+          alert('submit err')
+          return false
+        }
       })
     },
     login () {
-      axios.get('http://localhost:3000/admins/login', {
-        params: {
-          user_name: this.formData.user_name,
-          password: this.formData.password
-        }
-      })
-      .then((response) => {
-        let res = response.data
+      if (this.formData.user_name === '') {
+        console.log('username: ' + this.formData.user_name)
+        this.$message({
+          message: '用户名密码不能为空',
+          type: 'warning'
+        })
+      } else {
+        axios.get('http://localhost:3000/admins/login', {
+          params: {
+            user_name: this.formData.user_name,
+            password: this.formData.password
+          }
+        })
+        .then((response) => {
+          let res = response.data
 
-        if (res.status === '1') {
-          console.log(res.msg)
-        } else if (res.status === '0') {
-          console.log(res.msg)
-          this.$message({
-            message: '密码错误',
-            type: 'warning'
-          })
-        } else if (res.status === '3') {
-          this.$message({
-            message: '未注册用户',
-            type: 'warning'
-          })         
-        } else {
-          console.log(res.msg)
-          this.$store.commit('updateUserInfo', this.formData.user_name)
-          this.$message({
-            message: '登录成功',
-            type: 'success'
-          })
-          router.push('/manage')
-        }
-      })
+          if (res.status === '1') {
+            console.log(res.msg)
+          } else if (res.status === '0') {
+            console.log(res.msg)
+            this.$message({
+              message: '密码错误',
+              type: 'warning'
+            })
+          } else if (res.status === '3') {
+            this.$message({
+              message: '未注册用户',
+              type: 'warning'
+            })
+          } else {
+            console.log(res.msg)
+            this.$store.commit('updateUserInfo', this.formData.user_name)
+            this.$message({
+              message: '登录成功',
+              type: 'success'
+            })
+            router.push('/manage')
+          }
+        })
+      }
+    },
+    _login () {
+      this.throttle(this.login())
     }
   }
 }
@@ -144,6 +162,7 @@ export default {
     width 400px
     padding 14px
     background-color white
+    box-shadow 3px 3px 4px rgba(0, 0, 0, 0.3)
   .btn
     display flex
     justify-content space-between

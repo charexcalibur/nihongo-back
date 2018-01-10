@@ -116,7 +116,7 @@ export default {
         // this.logout()
         this.dialogVisible = true
       }
-    }    
+    }
   }
 }
 </script>

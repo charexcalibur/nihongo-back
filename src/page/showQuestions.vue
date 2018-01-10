@@ -112,7 +112,6 @@
 
 <script>
   import axios from 'axios'
-  import headTop from './../components/header'
   export default {
     data () {
       return {
