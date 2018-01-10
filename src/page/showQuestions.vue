@@ -198,6 +198,7 @@
         this.selectedId = row.questionId
         this.questionsForm.questionLevel = row.questionLevel
         this.questionsForm.questionUnit = row.questionUnit
+        this.questionsForm.questionType = row.questionType
         this.questionsForm.questionTitle = row.questionTitle
         this.questionsForm.option_1 = row.option_1
         this.questionsForm.option_2 = row.option_2
@@ -216,6 +217,7 @@
             const params = {
               questionId: intQuestionId,
               questionLevel: this.questionsForm.questionLevel,
+              questionType: this.questionsForm.questionType,
               questionUnit: this.questionsForm.questionUnit,
               questionTitle: this.questionsForm.questionTitle,
               option_1: this.questionsForm.option_1,
