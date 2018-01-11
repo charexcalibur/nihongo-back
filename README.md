@@ -4,7 +4,11 @@
 
 目前是这样的。
 
-![](http://owto68d41.bkt.clouddn.com/%E5%90%8E%E5%8F%B0%E7%B3%BB%E7%BB%9F.png)
+![](http://owto68d41.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20180111225635.png)
+
+![](http://owto68d41.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20180111225731.png)
+
+![](http://owto68d41.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20180111225713.png)
 
 ## Build Setup
 
