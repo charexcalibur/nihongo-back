@@ -37,8 +37,6 @@
           <i class="el-icon-setting" style="margin-right: 15px"></i>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="a">登出</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <span>{{userName}}</span>
@@ -133,7 +131,9 @@ export default {
     color: white !important
   .el-header
     background-color #5DAC81
-    line-height 60px 
+    line-height 60px
+    span
+      color white
 </style>
 
 
