@@ -27,6 +27,15 @@ axios.defaults.withCredentials = true
 
 export default {
   data () {
+    var checkSpace = (rule, value, callback) => {
+      if (value.charAt(0) === ' ') {
+        return callback(new Error('不能包含空格'))
+      } else if (value.indexOf(' ') != 0) {
+        return callback(new Error('不能包含空格'))
+      } else {
+        return callback()
+      }
+    }
     return {
       formData: {
         user_name: '',
@@ -35,10 +44,12 @@ export default {
       rules: {
         user_name: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 2, max: 6, message: '长度在2到6个字符', trigger: 'blur' }
+          { min: 2, max: 6, message: '长度在2到6个字符', trigger: 'blur' },
+          { validator: checkSpace, trigger: 'blur'}
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' }
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { validator: checkSpace, trigger: 'blur'}
         ]
       }
     }
