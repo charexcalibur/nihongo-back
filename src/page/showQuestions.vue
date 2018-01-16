@@ -204,7 +204,7 @@
         this.questionsForm.option_2 = row.option_2
         this.questionsForm.option_3 = row.option_3
         this.questionsForm.option_4 = row.option_4
-        this.questionsForm.correctAnswer = row.correctAnswer
+        this.questionsForm.correctAnswer = row.correctAnswer.toString()
         this.questionsForm.answerAnalysis = row.answerAnalysis
       },
       submitForm (formName) {
