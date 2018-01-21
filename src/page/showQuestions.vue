@@ -238,7 +238,7 @@
             this._initData()
             this.dialogVisible = false
             this.editFormVisible = false
-            this.$router.go(0)
+            // this.$router.go(0)
           } else {
             console.log('error submit!!')
             return false
